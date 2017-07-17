@@ -8,10 +8,10 @@
 * 待添加 ……
 
 ## 图片展示
-![index](https://github.com/helsonxiao/flaglist/display/index.png)
+![index](https://github.com/helsonxiao/flaglist/blob/master/display/index.png)
 
 ## 已实现功能
-* 在后台添加待办事项
+* 在后台添加待办事项 & 更改 status
 * 可显示已办事项
 * 可显示未办事项
 * 可显示所有事项
