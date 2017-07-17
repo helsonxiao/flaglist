@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* 背景图片 */
+html {
+    background-image: url(wave.jpg);
+    background-size: cover;
+
+}
+
+body {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.slogan {
+    text-align: center;
+    font-size: 3em;
+    margin-top: 7%;
+    margin-bottom: 5%;
+}
+
+/* 导航区 */
+.active {
+    margin-left: 39%;
+}
+
+li {
+    margin: 0 2em;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+    color: #fff;
+    background-color: #333;
+}
+
+.nav-pills>li.inactive>a {
+    color: #333;
+}
