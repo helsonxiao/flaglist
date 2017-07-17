@@ -7,8 +7,8 @@
 * Bootstrap 3.7
 * 待添加 ……
 
-## 截图展示
-待添加 ……
+## 图片展示
+![index](https://github.com/helsonxiao/flaglist/display/index.png)
 
 ## 已实现功能
 * 在后台添加待办事项
