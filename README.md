@@ -1,5 +1,5 @@
 # flaglist
-本项目为我的入职考核作业，展示了一个使用 Django 搭建的 __FlagList__ TodoList
+本项目为我的入职考核作业，展示了一个使用 Django 搭建的 ~~FlagList~~ TodoList
 
 ## 环境
 * Django 1.8
