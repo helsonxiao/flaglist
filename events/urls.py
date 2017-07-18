@@ -8,4 +8,8 @@ urlpatterns = [
     url(r'^all/$', views.list_all, name='list_all'),
     # ex: /7/
     url(r'^(?P<event_id>[0-9]+)/$', views.detail, name='detail'),
+    # ex: /7/edit/
+    url(r'^(?P<event_id>[0-9]+)/edit/$', views.edit_event, name='edit_event'),
+    # ex: /7/remove/
+    url(r'^(?P<event_id>[0-9]+)/remove/$', views.remove_event, name='remove_event'),
 ]
