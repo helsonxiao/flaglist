@@ -1,0 +1,14 @@
+{% extends 'events/base.html' %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        {% for event in events %}
+            <a href="{% url 'detail' event_id=event.pk %}">
+                <h3>{{ event.title }}</h3>
+            </a>
+            <a class="btn btn-default" href="{% url 'remove_event' event_id=event.pk %}">
+                <span class="glyphicon glyphicon-remove"></span>
+            </a>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
