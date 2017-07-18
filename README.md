@@ -11,14 +11,17 @@
 ![index](https://github.com/helsonxiao/flaglist/blob/master/display/index.png)
 
 ## 已实现功能
-* 在后台添加待办事项 & 更改 status
-* 可显示已办事项
-* 可显示未办事项
-* 可显示所有事项
+* 添加待办事项
+* 编辑删除事项
+* 显示已办事项
+* 显示未办事项
+* 显示所有事项
 
 ## Todo
-* 直接添加事项
-* 编辑事项
+* ~~直接添加事项~~
+* ~~编辑事项~~
 * 修改事项 status
 * 用户注册及登陆
 * 界面调整
+* 更换 ProgreSQL
+* Deploy

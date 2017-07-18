@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>请立 Flag</title>
-</head>
-<body>
+{% extends 'events/base.html' %}
+
+{% block content %}
     <h2>Flag</h2>
     <br>
     <form method="POST">
@@ -12,5 +8,4 @@
         {{ form.as_p }}
         <button type="submit" class="save btn btn-default">Save</button>
     </form>
-</body>
-</html>
+{% endblock %}

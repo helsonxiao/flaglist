@@ -2,6 +2,9 @@
 
 {% block content %}
     {% if user.is_authenticated %}
+        <a class="btn btn-default" href="{% url 'create_event' %}">
+            <span class="glyphicon glyphicon-plus"></span>
+        </a>
         {% for event in events %}
             <a href="{% url 'detail' event_id=event.pk %}">
                 <h3>{{ event.title }}</h3>

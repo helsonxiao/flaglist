@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^(?P<event_id>[0-9]+)/edit/$', views.edit_event, name='edit_event'),
     # ex: /7/remove/
     url(r'^(?P<event_id>[0-9]+)/remove/$', views.remove_event, name='remove_event'),
+    url(r'^create/$', views.create_event, name='create_event'),
 ]
