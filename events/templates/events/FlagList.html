@@ -2,16 +2,21 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        <a class="btn btn-default" href="{% url 'create_event' %}">
-            <span class="glyphicon glyphicon-plus"></span>
-        </a>
-        {% for event in events %}
-            <a href="{% url 'detail' event_id=event.pk %}">
-                <h3>{{ event.title }}</h3>
-            </a>
-            <a class="btn btn-default" href="{% url 'remove_event' event_id=event.pk %}">
-                <span class="glyphicon glyphicon-remove"></span>
-            </a>
-        {% endfor %}
+        <p>
+            <a class="btn btn-default" href="{% url 'create_event' %}">
+            <span>树立新的 Flag</span></a>
+        </p>
+        <br>
+        <p>以下为相应事项：</p>
+        <ol>
+            {% for event in events %}
+            <li>
+                <a class="title" href="{% url 'detail' event_id=event.pk %}"><span>{{ event.title }}</span></a>
+                <a class="btn btn-default" href="{% url 'remove_event' event_id=event.pk %}">
+                <span class="glyphicon glyphicon-remove"></span></a>
+            </li>
+            {% endfor %}
+        </ol>
+
     {% endif %}
 {% endblock %}

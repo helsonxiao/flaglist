@@ -1,7 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
 from django.utils import timezone
-from django.db import models
 from django.contrib.auth.decorators import login_required
 from .models import Event
 from .forms import EventForm
@@ -14,28 +12,25 @@ def index(request):
 @login_required
 def list_unfinished(request):
     events = Event.objects.filter(user=request.user, status=False, created_date__lte=timezone.now()).order_by('-created_date')
-    context = {'events': events}
-    return render(request, 'events/FlagList.html', context)
+    return render(request, 'events/FlagList.html', context={'events': events})
 
 
 @login_required
 def list_finished(request):
     events = Event.objects.filter(user=request.user, status=True, created_date__lte=timezone.now()).order_by('-created_date')
-    context = {'events': events}
-    return render(request, 'events/FlagList.html', context)
+    return render(request, 'events/FlagList.html', context={'events': events})
 
 
 @login_required
 def list_all(request):
     events = Event.objects.filter(user=request.user, created_date__lte=timezone.now()).order_by('-created_date')
-    context = {'events': events}
-    return render(request, 'events/FlagList.html', context)
+    return render(request, 'events/FlagList.html', context={'events': events})
 
 
 @login_required
 def detail(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
-    return render(request, 'events/detail.html', {'event': event})
+    return render(request, 'events/detail.html', context={'event': event})
 
 
 @login_required
@@ -49,7 +44,7 @@ def create_event(request):
             return redirect('detail', event_id=event.pk)
     else:
         form = EventForm()
-    return render(request, 'events/edit.html', {'form': form})
+    return render(request, 'events/edit.html', context={'form': form})
 
 @login_required
 def remove_event(request, event_id):
@@ -74,4 +69,12 @@ def edit_event(request, event_id):
             return redirect('detail', event_id=event.pk)
     else:
         form = EventForm(instance=event)
-    return render(request, 'events/edit.html', {'form': form})
+    return render(request, 'events/edit.html', context={'form': form})
+
+
+@login_required
+def finish_event(request, event_id):
+    event = get_object_or_404(Event, pk=event_id)
+    event.status = True
+    event.save()
+    return redirect('list_finished')
