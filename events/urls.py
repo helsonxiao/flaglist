@@ -1,7 +1,18 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
+from rest_framework.urlpatterns import format_suffix_patterns
+
 from . import views
 
 urlpatterns = [
+    # API View
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api/$', views.api_root),
+    url(r'^api/events/$', views.EventList.as_view(), name='event-list'),
+    url(r'^api/events/(?P<pk>[0-9]+)/$', views.EventDetail.as_view(), name='event-detail'),
+    url(r'^api/users/$', views.UserList.as_view(), name='user-list'),
+    url(r'^api/users/(?P<pk>[0-9]+)/$', views.UserDetail.as_view(), name='user-detail'),
+
+    # Normal View
     url(r'^$', views.index, name='index'),
     url(r'^unfinished/$', views.list_unfinished, name='list_unfinished'),
     url(r'^finished/$', views.list_finished, name='list_finished'),
@@ -15,3 +26,5 @@ urlpatterns = [
     url(r'^create/$', views.create_event, name='create_event'),
     url(r'^(?P<event_id>[0-9]+)/finish/$', views.finish_event, name='finish_event'),
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)
