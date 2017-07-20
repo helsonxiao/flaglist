@@ -1,8 +1,49 @@
+
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
 from .models import Event
 from .forms import EventForm
+
+from .serializers import EventSerializer, UserSerializer
+from rest_framework import generics, permissions
+from django.contrib.auth.models import User
+
+
+class EventList(generics.ListCreateAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+
+class EventDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+
+class UserList(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+@api_view(['GET'])
+def api_root(request, format=None):
+    return Response({
+        'users': reverse('user-list', request=request, format=format),
+        'events': reverse('event-list', request=request, format=format)
+    })
 
 
 def index(request):
@@ -11,19 +52,19 @@ def index(request):
 
 @login_required
 def list_unfinished(request):
-    events = Event.objects.filter(user=request.user, status=False, created_date__lte=timezone.now()).order_by('-created_date')
+    events = Event.objects.filter(owner=request.user, status=False, created_date__lte=timezone.now()).order_by('-created_date')
     return render(request, 'events/FlagList.html', context={'events': events})
 
 
 @login_required
 def list_finished(request):
-    events = Event.objects.filter(user=request.user, status=True, created_date__lte=timezone.now()).order_by('-created_date')
+    events = Event.objects.filter(owner=request.user, status=True, created_date__lte=timezone.now()).order_by('-created_date')
     return render(request, 'events/FlagList.html', context={'events': events})
 
 
 @login_required
 def list_all(request):
-    events = Event.objects.filter(user=request.user, created_date__lte=timezone.now()).order_by('-created_date')
+    events = Event.objects.filter(owner=request.user, created_date__lte=timezone.now()).order_by('-created_date')
     return render(request, 'events/FlagList.html', context={'events': events})
 
 
@@ -39,12 +80,13 @@ def create_event(request):
         form = EventForm(request.POST)
         if form.is_valid():
             event = form.save(commit=False)
-            event.user = request.user
+            event.owner = request.user
             event.save()
             return redirect('detail', event_id=event.pk)
     else:
         form = EventForm()
     return render(request, 'events/edit.html', context={'form': form})
+
 
 @login_required
 def remove_event(request, event_id):
@@ -64,7 +106,7 @@ def edit_event(request, event_id):
         form = EventForm(request.POST, instance=event)
         if form.is_valid():
             event = form.save(commit=False)  # todo
-            event.user = request.user
+            event.owner = request.user
             event.save()
             return redirect('detail', event_id=event.pk)
     else:
