@@ -11,8 +11,8 @@
         <ol>
             {% for event in events %}
             <li>
-                <a class="title" href="{% url 'detail' event_id=event.pk %}"><span>{{ event.title }}</span></a>
-                <a class="btn btn-default" href="{% url 'remove_event' event_id=event.pk %}">
+                <a class="title" href="{% url 'detail' pk=event.pk %}"><span>{{ event.title }}</span></a>
+                <a class="btn btn-default" href="{% url 'remove_event' pk=event.pk %}">
                 <span class="glyphicon glyphicon-remove"></span></a>
             </li>
             {% endfor %}
