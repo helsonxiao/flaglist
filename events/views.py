@@ -11,7 +11,7 @@ from .models import Event
 from .forms import EventForm
 
 from .serializers import EventSerializer, UserSerializer
-from rest_framework import generics, permissions, viewsets
+from rest_framework import generics, permissions, viewsets, filters
 from django.contrib.auth.models import User
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -22,8 +22,9 @@ class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
-    filter_backends = (DjangoFilterBackend,)
+    filter_backends = (DjangoFilterBackend, filters.OrderingFilter)
     filter_fields = ('status', 'owner')
+    ordering_fields = ('expire_date',)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
