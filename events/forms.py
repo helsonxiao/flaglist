@@ -6,4 +6,4 @@ class EventForm(forms.ModelForm):  # todo
 
     class Meta:
         model = Event
-        fields = ('title', 'text')
+        fields = ('title', 'text', 'expire_date', "priority")
