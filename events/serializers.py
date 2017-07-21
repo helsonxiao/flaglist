@@ -8,7 +8,7 @@ class EventSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Event
-        fields = ('id', 'owner', 'url', 'title', 'text', 'created_date', 'status')
+        fields = ('id', 'owner', 'url', 'priority', 'title', 'text', 'created_date', 'status', 'expire_date')
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
