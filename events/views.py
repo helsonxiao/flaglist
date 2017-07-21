@@ -2,18 +2,18 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from django.views import generic
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
-
 from events.permissions import IsOwnerOrReadOnly
 from .models import Event
 from .forms import EventForm
-
 from .serializers import EventSerializer, UserSerializer
 from rest_framework import generics, permissions, viewsets, filters
 from django.contrib.auth.models import User
 from django_filters.rest_framework import DjangoFilterBackend
+
 
 class EventViewSet(viewsets.ModelViewSet):
     """
@@ -38,6 +38,9 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = UserSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
+
+# --------------------------------------------------
+# 以下为 可视化API 精简过程中遗留的代码，仅供学习，待删除。
 
 # @api_view(['GET'])
 # def api_root(request, format=None):
@@ -86,25 +89,27 @@ def index(request):
     return render(request, 'events/index.html')
 
 
-def list_unfinished(request):
-    events = Event.objects.filter(owner=request.user, status=False, created_date__lte=timezone.now()).order_by('-created_date')
-    return render(request, 'events/FlagList.html', context={'events': events})
+class AllEventView(generic.ListView):
+    template_name = 'events/FlagList.html'
+    context_object_name = 'events'
+    status = False
+
+    def get_queryset(self):
+        return Event.objects.filter(owner=self.request.user, created_date__lte=timezone.now())
 
 
-def list_finished(request):
-    events = Event.objects.filter(owner=request.user, status=True, created_date__lte=timezone.now()).order_by('-created_date')
-    return render(request, 'events/FlagList.html', context={'events': events})
+class EventListView(generic.ListView):
+    template_name = 'events/FlagList.html'
+    context_object_name = 'events'
+    status = False
+
+    def get_queryset(self):
+        return Event.objects.filter(owner=self.request.user, status=self.status, created_date__lte=timezone.now())
 
 
-def list_all(request):
-    events = Event.objects.filter(owner=request.user, created_date__lte=timezone.now()).order_by('-created_date')
-    return render(request, 'events/FlagList.html', context={'events': events})
-
-
-@login_required
-def detail(request, event_id):
-    event = get_object_or_404(Event, pk=event_id)
-    return render(request, 'events/detail.html', context={'event': event})
+class DetailView(generic.DetailView):
+    model = Event
+    template_name = 'events/detail.html'
 
 
 @login_required
@@ -115,15 +120,15 @@ def create_event(request):
             event = form.save(commit=False)
             event.owner = request.user
             event.save()
-            return redirect('detail', event_id=event.pk)
+            return redirect('detail', pk=event.pk)
     else:
         form = EventForm()
     return render(request, 'events/edit.html', context={'form': form})
 
 
 @login_required
-def remove_event(request, event_id):
-    event = get_object_or_404(Event, pk=event_id)
+def remove_event(request, pk):
+    event = get_object_or_404(Event, pk=pk)
     status = event.status
     event.delete()
     if status:
@@ -133,8 +138,8 @@ def remove_event(request, event_id):
 
 
 @login_required
-def edit_event(request, event_id):
-    event = get_object_or_404(Event, pk=event_id)
+def edit_event(request, pk):
+    event = get_object_or_404(Event, pk=pk)
     if request.method == "POST":
         form = EventForm(request.POST, instance=event)
         if form.is_valid():
@@ -148,8 +153,46 @@ def edit_event(request, event_id):
 
 
 @login_required
-def finish_event(request, event_id):
-    event = get_object_or_404(Event, pk=event_id)
+def finish_event(request, pk):
+    event = get_object_or_404(Event, pk=pk)
     event.status = True
     event.save()
     return redirect('list_finished')
+
+
+# ----------------------------------------------------
+# 精简过程中被丢弃或者还有可能被用到的代码，仅供学习用，待删除。
+
+# class UnfinishedListView(generic.ListView):
+#     template_name = 'events/FlagList.html'
+#     context_object_name = 'events'
+#
+#     def get_queryset(self):
+#         return Event.objects.filter(owner=self.request.user, status=False, created_date__lte=timezone.now())
+
+
+# def list_unfinished(request):
+#     events = Event.objects.filter(owner=request.user, status=False, created_date__lte=timezone.now())
+#     return render(request, 'events/FlagList.html', context={'events': events})
+
+
+# class FinishedListView(generic.ListView):
+#     template_name = 'events/FlagList.html'
+#     context_object_name = 'events'
+#
+#     def get_queryset(self):
+#         return Event.objects.filter(owner=self.request.user, status=True, created_date__lte=timezone.now())
+
+
+# def list_finished(request):
+#     events = Event.objects.filter(owner=request.user, status=True, created_date__lte=timezone.now())
+#     return render(request, 'events/FlagList.html', context={'events': events})
+
+# def list_all(request):
+#     events = Event.objects.filter(owner=request.user, created_date__lte=timezone.now())
+#     return render(request, 'events/FlagList.html', context={'events': events})
+
+# @login_required
+# def detail(request, pk):
+#     event = get_object_or_404(Event, pk=pk)
+#     return render(request, 'events/detail.html', context={'event': event})
