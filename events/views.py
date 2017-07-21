@@ -1,4 +1,4 @@
-
+# coding: utf-8
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
@@ -11,43 +11,74 @@ from .models import Event
 from .forms import EventForm
 
 from .serializers import EventSerializer, UserSerializer
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, viewsets
 from django.contrib.auth.models import User
+from django_filters.rest_framework import DjangoFilterBackend
 
-
-class EventList(generics.ListCreateAPIView):
+class EventViewSet(viewsets.ModelViewSet):
+    """
+    Show all events. Or you can filter them.
+    """
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('status', 'owner')
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
 
-class EventDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Event.objects.all()
-    serializer_class = EventSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
-
-
-class UserList(generics.ListCreateAPIView):
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    This viewset automatically provides `list` and `detail` actions.
+    """
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 
-class UserDetail(generics.RetrieveAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+# @api_view(['GET'])
+# def api_root(request, format=None):
+#     return Response({
+#         'users': reverse('user-list', request=request, format=format),
+#         'events': reverse('event-list', request=request, format=format)
+#     })
+#
+#
+# class EventList(generics.ListCreateAPIView):
+#     queryset = Event.objects.all()
+#     serializer_class = EventSerializer
+#     permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
+#     filter_backends = (DjangoFilterBackend,)
+#     filter_fields = ('status',)
+#
+#     def perform_create(self, serializer):
+#         serializer.save(owner=self.request.user)
+#
+#
+# class EventDetail(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Event.objects.all()
+#     serializer_class = EventSerializer
+#     permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
+#     filter_backends = (DjangoFilterBackend,)
+#     filter_fields = ('status',)
+#
+#
+# class UserList(generics.ListCreateAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
+#     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+#
+#
+# class UserDetail(generics.RetrieveAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
+#     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 
-@api_view(['GET'])
-def api_root(request, format=None):
-    return Response({
-        'users': reverse('user-list', request=request, format=format),
-        'events': reverse('event-list', request=request, format=format)
-    })
+# ------------
+# 以下为耦合部分
 
 
 def index(request):
