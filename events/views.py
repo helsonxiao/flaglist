@@ -24,7 +24,7 @@ class EventViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
     filter_backends = (DjangoFilterBackend, filters.OrderingFilter)
     filter_fields = ('status', 'owner')
-    ordering_fields = ('expire_date',)
+    ordering_fields = ('expire_date', 'priority')
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -86,19 +86,16 @@ def index(request):
     return render(request, 'events/index.html')
 
 
-@login_required
 def list_unfinished(request):
     events = Event.objects.filter(owner=request.user, status=False, created_date__lte=timezone.now()).order_by('-created_date')
     return render(request, 'events/FlagList.html', context={'events': events})
 
 
-@login_required
 def list_finished(request):
     events = Event.objects.filter(owner=request.user, status=True, created_date__lte=timezone.now()).order_by('-created_date')
     return render(request, 'events/FlagList.html', context={'events': events})
 
 
-@login_required
 def list_all(request):
     events = Event.objects.filter(owner=request.user, created_date__lte=timezone.now()).order_by('-created_date')
     return render(request, 'events/FlagList.html', context={'events': events})
