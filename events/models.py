@@ -8,6 +8,7 @@ class Event(models.Model):
     text = models.TextField()
     created_date = models.DateTimeField(
         default=timezone.now)
+    expire_date = models.DateTimeField(null=True)
     status = models.BooleanField(default=False)
 
     def create(self):
