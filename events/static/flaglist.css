@@ -7,11 +7,14 @@
     text-align: center;
 }
 
-.flag-header h2 {
+.flag-header {
     background-color: #333;
     margin: 0;
-    padding: 2%;
-    color: rgba(255, 255, 255, 1);
+    padding: 1%;
+}
+
+.flag-header a {
+    color: rgb(255, 255, 255);
 }
 
 /* 列表区 */
