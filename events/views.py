@@ -90,18 +90,20 @@ def index(request):
 
 
 class AllEventView(generic.ListView):
-    template_name = 'events/FlagList.html'
+    template_name = 'events/flaglist.html'
     context_object_name = 'events'
     status = False
+    paginate_by = 3
 
     def get_queryset(self):
         return Event.objects.filter(owner=self.request.user, created_date__lte=timezone.now())
 
 
 class EventListView(generic.ListView):
-    template_name = 'events/FlagList.html'
+    template_name = 'events/flaglist.html'
     context_object_name = 'events'
     status = False
+    paginate_by = 3
 
     def get_queryset(self):
         return Event.objects.filter(owner=self.request.user, status=self.status, created_date__lte=timezone.now())
@@ -146,7 +148,7 @@ def edit_event(request, pk):
             event = form.save(commit=False)  # todo
             event.owner = request.user
             event.save()
-            return redirect('detail', event_id=event.pk)
+            return redirect('detail', pk=event.pk)
     else:
         form = EventForm(instance=event)
     return render(request, 'events/edit.html', context={'form': form})
@@ -164,7 +166,7 @@ def finish_event(request, pk):
 # 精简过程中被丢弃或者还有可能被用到的代码，仅供学习用，待删除。
 
 # class UnfinishedListView(generic.ListView):
-#     template_name = 'events/FlagList.html'
+#     template_name = 'events/flaglist.html'
 #     context_object_name = 'events'
 #
 #     def get_queryset(self):
@@ -173,11 +175,11 @@ def finish_event(request, pk):
 
 # def list_unfinished(request):
 #     events = Event.objects.filter(owner=request.user, status=False, created_date__lte=timezone.now())
-#     return render(request, 'events/FlagList.html', context={'events': events})
+#     return render(request, 'events/flaglist.html', context={'events': events})
 
 
 # class FinishedListView(generic.ListView):
-#     template_name = 'events/FlagList.html'
+#     template_name = 'events/flaglist.html'
 #     context_object_name = 'events'
 #
 #     def get_queryset(self):
@@ -186,11 +188,11 @@ def finish_event(request, pk):
 
 # def list_finished(request):
 #     events = Event.objects.filter(owner=request.user, status=True, created_date__lte=timezone.now())
-#     return render(request, 'events/FlagList.html', context={'events': events})
+#     return render(request, 'events/flaglist.html', context={'events': events})
 
 # def list_all(request):
 #     events = Event.objects.filter(owner=request.user, created_date__lte=timezone.now())
-#     return render(request, 'events/FlagList.html', context={'events': events})
+#     return render(request, 'events/flaglist.html', context={'events': events})
 
 # @login_required
 # def detail(request, pk):
