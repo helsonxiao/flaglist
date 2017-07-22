@@ -92,7 +92,6 @@ def index(request):
 class AllEventView(generic.ListView):
     template_name = 'events/flaglist.html'
     context_object_name = 'events'
-    status = False
     paginate_by = 3
 
     def get_queryset(self):
