@@ -2,8 +2,8 @@ from django.db import models
 from django.utils import timezone
 
 PRIORITY_CHOICES = (
-    (1, 'Important'),
-    (2, 'Normal'),
+    ('1', 'Important'),
+    ('2', 'Normal'),
 )
 
 
@@ -13,7 +13,7 @@ class Event(models.Model):
     text = models.TextField()
     created_date = models.DateTimeField(
         default=timezone.now)
-    expire_date = models.DateTimeField(null=True)
+    expire_date = models.DateField(default='2333-08-07')
     status = models.BooleanField(default=False)
     priority = models.CharField(choices=PRIORITY_CHOICES, default='Normal', max_length=50)
 
