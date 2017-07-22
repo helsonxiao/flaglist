@@ -5,6 +5,8 @@ PRIORITY_CHOICES = (
     (1, 'Important'),
     (2, 'Normal'),
 )
+
+
 class Event(models.Model):
     owner = models.ForeignKey('auth.User', related_name='events')
     title = models.CharField(max_length=200)

@@ -3,7 +3,6 @@ from django import forms
 
 
 class EventForm(forms.ModelForm):  # todo
-
     class Meta:
         model = Event
-        fields = ('title', 'text', 'expire_date', "priority")
+        fields = ('title', 'text', 'expire_date', 'priority')
