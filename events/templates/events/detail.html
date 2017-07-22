@@ -2,13 +2,16 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        {{ event.text }}
-        <p>
-            <a class="btn btn-default" href="{% url 'edit_event' pk=event.pk %}">
-            <span class="glyphicon glyphicon-pencil"></span></a>
-        <a class="btn btn-default" href="{% url 'remove_event' pk=event.pk %}">
-            <span class="glyphicon glyphicon-remove"></span></a>
-        <a class="btn btn-default" href="{% url 'finish_event' pk=event.pk %}">Done</a>
-        </p>
+        <p id="text">{{ event.text }}</p>
+        <div class="btn-group" role="group" aria-label="...">
+          <button type="button" class="btn btn-default">
+              <a href="{% url 'edit_event' pk=event.pk %}">
+            <span class="glyphicon glyphicon-pencil"></span></a></button>
+          <button type="button" class="btn btn-default">
+              <a href="{% url 'finish_event' pk=event.pk %}">Done</a></button>
+            <button type="button" class="btn btn-default">
+              <a href="{% url 'remove_event' pk=event.pk %}">
+            <span class="glyphicon glyphicon-remove"></span></a></button>
+        </div>
     {% endif %}
 {% endblock %}

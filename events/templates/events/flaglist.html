@@ -2,15 +2,12 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-
-        <p>
+        <p class="new">
             <a class="btn btn-default" href="{% url 'create_event' %}">
             <span>树立新的 Flag</span></a>
         </p>
 
-
         <div class="event-list">
-            <p>以下为相应事项：</p>
             <ol>
                 {% for event in events %}
                 <li>
@@ -20,6 +17,22 @@
                 </li>
                 {% endfor %}
             </ol>
+        </div>
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
         </div>
     {% endif %}
 {% endblock %}
