@@ -20,6 +20,16 @@ Schema: 127.0.0.1:8000/schema
 ## 图片展示
 ![index](https://github.com/helsonxiao/flaglist/blob/master/display/index.png)
 
+GIF 链接：
+
+https://cl.ly/lfqx, https://cl.ly/lgFo
+
+https://cl.ly/lfyS, https://cl.ly/lfVX
+
+https://cl.ly/lfVN, https://cl.ly/lg4c
+
+https://cl.ly/lfzo, https://cl.ly/lg5P
+
 ## 注意事项
 请于 127.0.0.1:8000/admin 登陆后再进行操作，因为前端登陆界面还没写出来。。。
 
