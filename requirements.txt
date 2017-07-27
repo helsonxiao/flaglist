@@ -12,4 +12,6 @@ Jinja2==2.9.6
 Markdown==2.6.8
 MarkupSafe==1.0
 psycopg2==2.7.1
+requests==2.18.2
 uritemplate==3.0.0
+urllib3==1.22
