@@ -39,8 +39,16 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'events',
     'rest_framework',
-    'django_filters'
+    'django_filters',
+    'webpack_loader'
 )
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'bundles/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+    }
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
@@ -109,5 +117,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+STATICFILES_DIRS = (
+    #This lets Django's collectstatic store our bundles
+    os.path.join(BASE_DIR, 'assets'),
+)
 
 DATE_INPUT_FORMATS = ['%Y-%m-%d', ]  # '2017-7-22'

@@ -1,0 +1,30 @@
+{
+  "name": "todolist",
+  "version": "1.0.0",
+  "description": "本项目为我的考核作业，展示了一个使用 Django 搭建的 ~~FlagList~~ TodoList ，由于 JS 还没学 ... 前后端尚未分离。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/helsonxiao/flaglist.git"
+  },
+  "author": "helsonxiao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/helsonxiao/flaglist/issues"
+  },
+  "homepage": "https://github.com/helsonxiao/flaglist#readme",
+  "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "jquery": "^3.2.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "webpack": "^3.4.1",
+    "webpack-bundle-tracker": "^0.2.0"
+  }
+}

@@ -1,4 +1,6 @@
 {% extends 'events/base.html' %}
+{% load render_bundle from webpack_loader %}
+
 
 {% block content %}
     {% if user.is_authenticated %}
@@ -17,6 +19,10 @@
                 </li>
                 {% endfor %}
             </ol>
+        </div>
+
+        <div id="events">
+            {% render_bundle 'main' %}
         </div>
 
         <div class="pagination">
