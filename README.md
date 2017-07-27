@@ -3,13 +3,17 @@
 
 题目要求在可视化 API 中均已实现，前后耦合的代码有待改进。
 
+在事项列表界面用 React & webpack 尝试导入了 API 中的数据。
+
 ## Requirements
 * Django (1.8.18)
 * djangorestframework (3.6.3)
 * django-filter (1.0.4)
+* django-webpack-loader (0.2.4)
 * coreapi (2.3.1)
 * Python (2.7.13)
 * Bootstrap (3.3.7)
+* npm (npm install --save-dev jquery react react-dom webpack webpack-bundle-tracker babel-loader babel-core babel-preset-es2015 babel-preset-react)
 * 待添加 ……
 
 ## API
@@ -54,5 +58,5 @@ https://cl.ly/lfzo, https://cl.ly/lg5P
 * 炫酷的界面
 * 更换 ProgreSQL
 * Deploy
-* 前后端分离
+* **前后端分离**
 * 增加错误检查
