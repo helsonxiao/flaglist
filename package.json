@@ -4,7 +4,8 @@
   "description": "本项目为我的考核作业，展示了一个使用 Django 搭建的 ~~FlagList~~ TodoList ，由于 JS 还没学 ... 前后端尚未分离。",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --watch"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,7 @@
   },
   "homepage": "https://github.com/helsonxiao/flaglist#readme",
   "devDependencies": {
+    "babel": "^6.23.0",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",
     "babel-preset-es2015": "^6.24.1",
