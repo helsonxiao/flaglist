@@ -170,3 +170,4 @@ fabric.properties
 .idea/
 
 node_modules/
+assets/bundles/
