@@ -1,25 +1,31 @@
 <!DOCTYPE html>
 {% load staticfiles %}
+{% load render_bundle from webpack_loader %}
 
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{% static 'index.css' %}" >
-    <title>FlagList</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{% static 'index.css' %}" >
+  <title>FlagList</title>
 </head>
 <body>
-    <div class="slogan">
-        <p>TO DO OR TO FLAG,</p>
-        <p>IT IS A QUESTION.</p>
-    </div>
+  <div class="slogan">
+    <p>TO DO OR TO FLAG,</p>
+    <p>IT IS A QUESTION.</p>
+  </div>
 
-        <ul class="nav nav-pills">
-            <li role="presentation" class="active"><a href="{% url 'list_unfinished' %}">快倒的</a></li>
-            <li role="presentation" class="inactive"><a href="{% url 'list_finished' %}">没倒的</a></li>
-            <li role="presentation" class="inactive"><a href="{% url 'list_all' %}">所有的</a></li>
-        </ul>
+  <div id="test">
+    {% render_bundle 'index' %}
+  </div>
+
+  <ul class="nav nav-pills">
+    <li role="presentation" class="active"><a href="{% url 'list_unfinished' %}">快倒的</a></li>
+    <li role="presentation" class="inactive"><a href="{% url 'list_finished' %}">没倒的</a></li>
+    <li role="presentation" class="inactive"><a href="{% url 'list_all' %}">所有的</a></li>
+  </ul>
+
 
 </body>
 </html>

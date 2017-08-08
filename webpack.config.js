@@ -9,7 +9,8 @@ module.exports = {
     //your current directory. You don't have to specify the extension  now,
     //because you will specify extensions later in the `resolve` section
     entry: {
-        index: './assets/js/index'
+        index: './assets/js/index',
+        list: './assets/js/list'
     },
 
     output: {
@@ -90,4 +91,4 @@ module.exports = {
         //extensions that should be used to resolve modules
         extensions: ['.js', '.jsx']
     }   
-};
+}
